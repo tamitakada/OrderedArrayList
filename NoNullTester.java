@@ -1,7 +1,12 @@
+import java.util.Random;
+import java.util.ArrayList;
+
+
 public class NoNullTester {
 
   public static void main(String[] args) {
     testCreation();
+    testAdd();
   }
 
   public static void testCreation() {
@@ -24,6 +29,43 @@ public class NoNullTester {
     ));
 
     printResults(res, "Test constructors");
+  }
+
+  public static void testAdd() {
+    boolean[] res = new boolean[3];
+
+    int[] oneData = {-2, 3, -1, 1000};
+    ArrayList<Integer> one = initIntArray(oneData);
+
+    try {
+      one.add(-4545);
+      res[0] = true;
+    } catch (IllegalArgumentException e) {
+      res[0] = false;
+    }
+
+    try {
+      one.add(null);
+      res[1] = false;
+    } catch (IllegalArgumentException e) {
+      res[1] = true;
+    }
+
+    res[2] = true;
+    for (int i = 0; i < 100; i++) {
+      Random rng = new Random();
+      int test = rng.nextInt();
+
+      NoNullArrayList<Integer> testArr = new NoNullArrayList<Integer>();
+      try {
+        testArr.add(test);
+      } catch (IllegalArgumentException e) {
+        res[2] = false;
+        break;
+      }
+    }
+
+    printResults(res, "Test add");
   }
 
   private static NoNullArrayList<String> initStringArray(String[] data) {
