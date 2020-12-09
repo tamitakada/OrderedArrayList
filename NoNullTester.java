@@ -105,19 +105,32 @@ public class NoNullTester {
       Random rng = new Random();
       int test = rng.nextInt();
 
-      NoNullArrayList<Integer> testArr = new NoNullArrayList<Integer>();
-      int index = rng.nextInt(testArr.size());
+      NoNullArrayList<Integer> testArr = generateRandomArr();
       try {
-
-        testArr.add(, test);
+        testArr.add(rng.nextInt(testArr.size()), test);
       } catch (IllegalArgumentException e) {
-        System.out.println(index);
         res[3] = false;
         break;
       }
     }
 
     printResults(res, "Test add with index");
+  }
+
+  private static NoNullArrayList<Integer> generateRandomArr() {
+    Random rng = new Random();
+    int len = rng.nextInt(200) + 1;
+    NoNullArrayList<Integer> stuff = new NoNullArrayList<Integer>(len);
+
+    for (int i = 0; i < len; i++) {
+      try {
+        stuff.add(rng.nextInt());
+      } catch (IllegalArgumentException e) {
+        System.out.println(":(((((((((((((((((((((((((((((((((((((((");
+      }
+    }
+
+    return stuff;
   }
 
   private static NoNullArrayList<String> initStringArray(String[] data) {
