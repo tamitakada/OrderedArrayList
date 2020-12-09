@@ -8,6 +8,7 @@ public class NoNullTester {
     testCreation();
     testAdd();
     testAddWithIndex();
+    testSet();
   }
 
   public static void testCreation() {
@@ -115,6 +116,65 @@ public class NoNullTester {
     }
 
     printResults(res, "Test add with index");
+  }
+
+  public static void testSet() {
+    boolean[] res = new boolean[5];
+
+    int[] oneData = {-1, 0, 0, 0, 0, -2222};
+    ArrayList<Integer> one = initIntArray(oneData);
+
+    int expected = -2222;
+    int got = 0;
+
+    try {
+      got = one.set(5, 0);
+      res[0] = true;
+    } catch (IllegalArgumentException e) {
+      res[0] = false;
+    }
+
+    res[1] = (expected == got);
+
+    try {
+      one.set(2, null);
+      res[2] = false;
+    } catch (IllegalArgumentException e) {
+      res[2] = true;
+    }
+
+    try {
+      one.set(2323, null);
+      res[3] = false;
+    } catch (IllegalArgumentException e) {
+      res[3] = true;
+    }
+
+    res[3] = true;
+    res[4] = true;
+    for (int i = 0; i < 100; i++) {
+      Random rng = new Random();
+      int test = rng.nextInt();
+
+      NoNullArrayList<Integer> testArr = generateRandomArr();
+      int index = rng.nextInt(testArr.size());
+      int ans = testArr.get(index);
+      int result = expected + 1;
+      try {
+        result = testArr.set(index, test);
+      } catch (IllegalArgumentException e) {
+        res[3] = false;
+        res[4] = false;
+        break;
+      }
+
+      if (ans != result) {
+        res[4] = false;
+        break;
+      }
+    }
+
+    printResults(res, "Test set");
   }
 
   private static NoNullArrayList<Integer> generateRandomArr() {
