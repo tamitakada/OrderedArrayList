@@ -7,6 +7,7 @@ public class NoNullTester {
   public static void main(String[] args) {
     testCreation();
     testAdd();
+    testAddWithIndex();
   }
 
   public static void testCreation() {
@@ -32,26 +33,30 @@ public class NoNullTester {
   }
 
   public static void testAdd() {
-    boolean[] res = new boolean[3];
+    boolean[] res = new boolean[4];
 
     int[] oneData = {-2, 3, -1, 1000};
     ArrayList<Integer> one = initIntArray(oneData);
 
+    boolean result = true;
+
     try {
-      one.add(-4545);
+      result = one.add(-4545);
       res[0] = true;
     } catch (IllegalArgumentException e) {
       res[0] = false;
     }
 
+    res[1] = result;
+
     try {
       one.add(null);
-      res[1] = false;
+      res[2] = false;
     } catch (IllegalArgumentException e) {
-      res[1] = true;
+      res[2] = true;
     }
 
-    res[2] = true;
+    res[3] = true;
     for (int i = 0; i < 100; i++) {
       Random rng = new Random();
       int test = rng.nextInt();
@@ -60,12 +65,59 @@ public class NoNullTester {
       try {
         testArr.add(test);
       } catch (IllegalArgumentException e) {
-        res[2] = false;
+        res[3] = false;
         break;
       }
     }
 
     printResults(res, "Test add");
+  }
+
+  public static void testAddWithIndex() {
+    boolean[] res = new boolean[4];
+
+    int[] oneData = {99, 2012223, -320948234};
+    ArrayList<Integer> one = initIntArray(oneData);
+
+    try {
+      one.add(0, 0);
+      res[0] = true;
+    } catch (IllegalArgumentException e) {
+      res[0] = false;
+    }
+
+    try {
+      one.add(2, null);
+      res[1] = false;
+    } catch (IllegalArgumentException e) {
+      res[1] = true;
+    }
+
+    try {
+      one.add(2323, null);
+      res[2] = false;
+    } catch (IllegalArgumentException e) {
+      res[2] = true;
+    }
+
+    res[3] = true;
+    for (int i = 0; i < 100; i++) {
+      Random rng = new Random();
+      int test = rng.nextInt();
+
+      NoNullArrayList<Integer> testArr = new NoNullArrayList<Integer>();
+      int index = rng.nextInt(testArr.size());
+      try {
+
+        testArr.add(, test);
+      } catch (IllegalArgumentException e) {
+        System.out.println(index);
+        res[3] = false;
+        break;
+      }
+    }
+
+    printResults(res, "Test add with index");
   }
 
   private static NoNullArrayList<String> initStringArray(String[] data) {

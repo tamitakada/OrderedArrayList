@@ -21,4 +21,14 @@ public class NoNullArrayList<T> extends ArrayList<T> {
     }
   }
 
+  public void add(int index, T t) throws IllegalArgumentException {
+    if (t == null) {
+      throw new IllegalArgumentException(
+        "Null is not a valid value."
+      );
+    } else {
+      super.add(index, t);
+    }
+  }
+
 }
