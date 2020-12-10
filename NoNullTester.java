@@ -30,7 +30,7 @@ public class NoNullTester {
       "[hi, hello,  howdy, Hola!, 100]"
     ));
 
-    printResults(res, "Test constructors");
+    Utils.printResults(res, "Test constructors");
   }
 
   public static void testAdd() {
@@ -71,7 +71,7 @@ public class NoNullTester {
       }
     }
 
-    printResults(res, "Test add");
+    Utils.printResults(res, "Test add");
   }
 
   public static void testAddWithIndex() {
@@ -115,7 +115,7 @@ public class NoNullTester {
       }
     }
 
-    printResults(res, "Test add with index");
+    Utils.printResults(res, "Test add with index");
   }
 
   public static void testSet() {
@@ -174,7 +174,7 @@ public class NoNullTester {
       }
     }
 
-    printResults(res, "Test set");
+    Utils.printResults(res, "Test set");
   }
 
   private static NoNullArrayList<Integer> generateRandomArr() {
@@ -207,14 +207,6 @@ public class NoNullTester {
       stuff.add(data[i]);
     }
     return stuff;
-  }
-
-  public static void printResults(boolean[] results, String testName) {
-    for (int i = 0; i < results.length; i++) {
-      char toShow = 'T';
-      if (!results[i]) toShow = 'F';
-      System.out.println(testName + " TEST #" + i + ": " + toShow);
-    }
   }
 
 }
