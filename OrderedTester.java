@@ -134,13 +134,13 @@ public class OrderedTester {
   }
 
   public static void testSet() {
-    boolean[] res = new boolean[5];
+    boolean[] res = new boolean[6];
 
     int[] oneData = {0, -1, 0, 0, 0, -2222};
-    ArrayList<Integer> one = initIntArray(oneData);
+    ArrayList<Integer> one = initInt(oneData);
 
-    int expected = -2222;
-    int got = 0;
+    int expected = 0;
+    int got = -1;
 
     try {
       got = one.set(5, -43);
@@ -150,7 +150,7 @@ public class OrderedTester {
     }
 
     res[1] = (expected == got);
-    res[2] = (one.toString().equals("[-43, -1, 0, 0, 0, 0]"));
+    res[2] = (one.toString().equals("[-2222, -43, -1, 0, 0, 0]"));
 
     try {
       one.set(2, null);
@@ -159,12 +159,21 @@ public class OrderedTester {
       res[3] = true;
     }
 
-    try {
-      one.set(2323, null);
-      res[4] = false;
-    } catch (IllegalArgumentException e) {
-      res[4] = true;
+    String[] twoData = {"Hello!", "goodbye", "", "919-919-9919", " he& lo& o "};
+    OrderedArrayList<String> two = initStr(twoData);
+
+    res[4] = true;
+
+    for (int i = 0; i < twoData.length; i++) {
+      try {
+        two.set(i, twoData[i]);
+      } catch (IllegalArgumentException e) {
+        res[4] = false;
+        break;
+      }
     }
+
+    res[5] = two.toString().equals("[,  he& lo& o , 919-919-9919, Hello!, goodbye]");
 
     Utils.printResults(res, "Test set");
   }
