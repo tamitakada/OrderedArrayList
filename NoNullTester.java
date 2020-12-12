@@ -119,7 +119,7 @@ public class NoNullTester {
   }
 
   public static void testSet() {
-    boolean[] res = new boolean[5];
+    boolean[] res = new boolean[6];
 
     int[] oneData = {-1, 0, 0, 0, 0, -2222};
     ArrayList<Integer> one = initIntArray(oneData);
@@ -150,8 +150,8 @@ public class NoNullTester {
       res[3] = true;
     }
 
-    res[3] = true;
     res[4] = true;
+    res[5] = true;
     for (int i = 0; i < 100; i++) {
       Random rng = new Random();
       int test = rng.nextInt();
@@ -163,13 +163,13 @@ public class NoNullTester {
       try {
         result = testArr.set(index, test);
       } catch (IllegalArgumentException e) {
-        res[3] = false;
         res[4] = false;
+        res[5] = false;
         break;
       }
 
       if (ans != result) {
-        res[4] = false;
+        res[5] = false;
         break;
       }
     }

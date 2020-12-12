@@ -8,6 +8,7 @@ public class OrderedTester {
     testCreation();
     testAdd();
     testAddWithIndex();
+    testSet();
   }
 
   public static void testCreation() {
@@ -130,6 +131,42 @@ public class OrderedTester {
     }
 
     Utils.printResults(res, "Test add with index");
+  }
+
+  public static void testSet() {
+    boolean[] res = new boolean[5];
+
+    int[] oneData = {0, -1, 0, 0, 0, -2222};
+    ArrayList<Integer> one = initIntArray(oneData);
+
+    int expected = -2222;
+    int got = 0;
+
+    try {
+      got = one.set(5, -43);
+      res[0] = true;
+    } catch (IllegalArgumentException e) {
+      res[0] = false;
+    }
+
+    res[1] = (expected == got);
+    res[2] = (one.toString().equals("[-43, -1, 0, 0, 0, 0]"));
+
+    try {
+      one.set(2, null);
+      res[3] = false;
+    } catch (IllegalArgumentException e) {
+      res[3] = true;
+    }
+
+    try {
+      one.set(2323, null);
+      res[4] = false;
+    } catch (IllegalArgumentException e) {
+      res[4] = true;
+    }
+
+    Utils.printResults(res, "Test set");
   }
 
   private static OrderedArrayList initInt(int[] data) {
