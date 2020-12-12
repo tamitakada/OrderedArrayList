@@ -6,6 +6,7 @@ public class OrderedTester {
 
   public static void main(String[] args) {
     testCreation();
+    testAdd();
   }
 
   public static void testCreation() {
@@ -17,15 +18,16 @@ public class OrderedTester {
     int[] oneData = {1, 0, 99, -101, 2, 33, 1, 1, 22, -15, 90, -1};
     one = initInt(oneData);
     res[1] = (one.toString().equals(
-        "[1, 0, 99, -101, 2, 33, 1, 1, 22, -15, 90, -1]"
+        "[-101, -15, -1, 0, 1, 1, 1, 2, 22, 33, 90, 99]"
       )
     );
 
     String[] twoData = {"hi", "hello", " howdy", "Hola!", "100"};
     OrderedArrayList<String> two = initStr(twoData);
     res[2] = (two.toString().equals(
-      "[hi, hello,  howdy, Hola!, 100]"
+      "[100, , Hola!, hi, hello,  howdy]"
     ));
+    System.out.println(two);
 
     String[] threeData = {"Helloo"};
     ArrayList<String> three = initStr(threeData);
@@ -34,6 +36,51 @@ public class OrderedTester {
     ));
 
     Utils.printResults(res, "Test constructors");
+  }
+
+  public static void testAdd() {
+    boolean[] res = new boolean[6];
+
+    OrderedArrayList<Integer> one = new OrderedArrayList<Integer>();
+    int[] oneData = {1, -999, -20, 0, 213, 54};
+    res[0] = true;
+    for (int i = 0; i < 6; i++) {
+      try {
+        one.add(oneData[i]);
+      } catch (IllegalArgumentException e) {
+        res[0] = false;
+        break;
+      }
+    }
+
+    res[1] = (one.toString().equals("[-999, -20, 0, 1, 54, 213]"));
+
+    OrderedArrayList<String> two = new OrderedArrayList<String>();
+    String[] twoData = {"0.", "Hello there", "981", "penguins", "@mail", "", " "};
+    res[2] = true;
+
+    for (int i = 0; i < 7; i++) {
+      try {
+        res[3] = two.add(twoData[i]);
+      } catch (IllegalArgumentException e) {
+        res[2] = false;
+        break;
+      }
+      if (!res[3]) {
+        break;
+      }
+    }
+
+    res[4] = (two.toString().equals("[,  , 0., 981, @mail, Hello there, penguins]"));
+
+    try {
+      two.add(null);
+      res[5] = false;
+    } catch (IllegalArgumentException e) {
+      res[5] = true;
+    }
+
+    Utils.printResults(res, "Test add");
   }
 
   private static OrderedArrayList initInt(int[] data) {
