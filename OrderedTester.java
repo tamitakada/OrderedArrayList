@@ -25,9 +25,8 @@ public class OrderedTester {
     String[] twoData = {"hi", "hello", " howdy", "Hola!", "100"};
     OrderedArrayList<String> two = initStr(twoData);
     res[2] = (two.toString().equals(
-      "[100, , Hola!, hi, hello,  howdy]"
+      "[ howdy, 100, Hola!, hello, hi]"
     ));
-    System.out.println(two);
 
     String[] threeData = {"Helloo"};
     ArrayList<String> three = initStr(threeData);
