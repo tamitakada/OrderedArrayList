@@ -7,6 +7,7 @@ public class OrderedTester {
   public static void main(String[] args) {
     testCreation();
     testAdd();
+    testAddWithIndex();
   }
 
   public static void testCreation() {
@@ -80,6 +81,55 @@ public class OrderedTester {
     }
 
     Utils.printResults(res, "Test add");
+  }
+
+  public static void testAddWithIndex() {
+    boolean[] res = new boolean[6];
+
+    OrderedArrayList<Integer> one = new OrderedArrayList<Integer>();
+    int[] oneData = {1, -999, -20, 0, 213, 54};
+    res[0] = true;
+    for (int i = 0; i < 6; i++) {
+      try {
+        one.add(i, oneData[i]);
+      } catch (IllegalArgumentException e) {
+        res[0] = false;
+        break;
+      }
+    }
+
+    res[1] = (one.toString().equals("[-999, -20, 0, 1, 54, 213]"));
+
+    OrderedArrayList<String> two = new OrderedArrayList<String>();
+    String[] twoData = {"0.", "Hello there", "981", "penguins", "@mail", "", " "};
+    res[2] = true;
+
+    for (int i = 0; i < 7; i++) {
+      try {
+        two.add(i, twoData[i]);
+      } catch (IllegalArgumentException e) {
+        res[2] = false;
+        break;
+      }
+    }
+
+    try {
+      two.add(3, "zee");
+      res[3] = true;
+    } catch (IllegalArgumentException e) {
+      res[3] = false;
+    }
+
+    res[4] = (two.toString().equals("[,  , 0., 981, @mail, Hello there, penguins, zee]"));
+
+    try {
+      two.add(22, null);
+      res[5] = false;
+    } catch (IllegalArgumentException e) {
+      res[5] = true;
+    }
+
+    Utils.printResults(res, "Test add with index");
   }
 
   private static OrderedArrayList initInt(int[] data) {

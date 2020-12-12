@@ -30,4 +30,14 @@ public class OrderedArrayList<T extends Comparable<T>> extends NoNullArrayList<T
     return true;
   }
 
+  public void add(int index, T item) throws IllegalArgumentException {
+    add(item);
+  }
+
+  public T set(int index, T item) throws IllegalArgumentException {
+    T toReturn = remove(index);
+    add(item);
+    return toReturn;
+  }
+
 }
